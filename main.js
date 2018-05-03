@@ -1,7 +1,9 @@
 const { RTMClient, WebClient } = require('@slack/client');
+const privateReplies = require('./privateReplies');
 
 const ALERT_CHANNEL_NAME = "server"; // Channel in which to post messages about excessive server disk usage
-async function getAlertChannelId() {
+
+async function getIdOfChannel(channelName) {
     const token = process.env.SLACK_TOKEN;
     const web = new WebClient(token);
     let channels;
@@ -13,7 +15,7 @@ async function getAlertChannelId() {
         return null;
     }
     
-    const alertChannel = channels.find(channel => channel.name === ALERT_CHANNEL_NAME);
+    const alertChannel = channels.find(channel => channel.name === channelName);
     if (alertChannel) {
         return alertChannel.id;
     } else {
@@ -23,7 +25,7 @@ async function getAlertChannelId() {
 
 async function setUpBot() {
     const token = process.env.SLACK_TOKEN;
-    const alertChannelId = await getAlertChannelId();
+    const alertChannelId = await getIdOfChannel(ALERT_CHANNEL_NAME);
     if (alertChannelId) {
         console.log("[INFO] Found channel in which to post alerts");
     } else {
@@ -39,9 +41,11 @@ async function setUpBot() {
             return;
         }
 
-        rtm.sendMessage("Hello, world!", message.channel).then(response =>
-            console.log("message sent: ", response.ts)
-        );
+        if (message.channel === alertChannelId) {
+
+        } else {
+            privateReplies.replyMessage(message, rtm);
+        }
     });
 
     rtm.start();
