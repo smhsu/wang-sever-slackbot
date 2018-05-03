@@ -12,6 +12,7 @@
   "dependencies": {
     "@slack/client": "^4.2.0",
     "bytes": "^3.0.0",
-    "diskusage": "^0.2.4"
+    "diskusage": "^0.2.4",
+    "dotenv": "^5.0.1"
   }
 }
