@@ -1,7 +1,7 @@
 {
-  "name": "slackbot",
+  "name": "wang-server-slackbot",
   "version": "1.0.0",
-  "description": "Wang House Slack bot",
+  "description": "Wang House Slack bot for server info",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,6 +10,8 @@
   "license": "ISC",
   "devDependencies": {},
   "dependencies": {
-    "@slack/client": "^4.2.0"
+    "@slack/client": "^4.2.0",
+    "bytes": "^3.0.0",
+    "diskusage": "^0.2.4"
   }
 }
