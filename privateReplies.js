@@ -21,7 +21,8 @@ const ABOUT_MESSAGE = "I was created by Silas Hsu.  I like well-documented code,
     "See my source code at https://github.com/smhsu/wang-sever-slackbot";
 
 /**
- * Mapping from received message to reply.  The value can either be a string, or a function that returns a string.
+ * Mapping from received message to reply.  The value can either be a string, or a function that returns a string.  Do
+ * not put any uppercase letters in keys, as all messages will be lowercased.
  */
 const MESSAGE_HANDLERS = {
     hi: GREETING_MESSAGE,
@@ -50,6 +51,9 @@ const MESSAGE_HANDLERS = {
  * @return {Promise<RTMCallResult | null>} promise that resolves when done replying
  */
 async function replyMessage(message, rtmClient) {
+    if (!message.text) {
+        return null;
+    }
     const handler = MESSAGE_HANDLERS[message.text.toLowerCase()];
     if (typeof handler === "string") {
         return await rtmClient.sendMessage(handler, message.channel);
