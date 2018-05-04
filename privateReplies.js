@@ -1,5 +1,4 @@
-const diskUsage = require('./diskUsage');
-const replyDiskUsage = diskUsage.replyDiskUsage;
+const { getDiskUsageMessage, getDiskCheckMessage } = require('./diskUsage');
 
 const GREETING_MESSAGE = "Hello, world!";
 
@@ -8,7 +7,7 @@ const HELP_MESSAGE =
 Here are a list of commands I understand:
 *help*: show this message
 *info load*: show a link to get current CPU and RAM use of our servers
-*info disk*: get current disk usage of select servers
+*info disk*: get current disk usage of select file systems
 `
 const INFO_LOAD_MESSAGE = "Visit this link for CPU and RAM use: http://wangftp.wustl.edu/~silas/serverLoad.cgi";
 
@@ -20,10 +19,11 @@ const MESSAGE_HANDLERS = {
     "info usage": INFO_LOAD_MESSAGE,
     "info cpu": INFO_LOAD_MESSAGE,
     "info ram": INFO_LOAD_MESSAGE,
-    "info disk": replyDiskUsage,
-    "info diskusage": replyDiskUsage,
-    "info disk usage": replyDiskUsage,
-}
+    "info disk": getDiskUsageMessage,
+    "info diskusage": getDiskUsageMessage,
+    "info disk usage": getDiskUsageMessage,
+    "check disk": getDiskCheckMessage, // For debugging; not shown in help.
+};
 
 async function replyMessage(message, rtmClient) {
     const handler = MESSAGE_HANDLERS[message.text.toLowerCase()];

@@ -1,5 +1,6 @@
 const { RTMClient, WebClient } = require('@slack/client');
 const privateReplies = require('./privateReplies');
+const { startDiskMonitor } = require('./diskUsage');
 
 const ALERT_CHANNEL_NAME = "server"; // Channel in which to post messages about excessive server disk usage
 
@@ -23,7 +24,7 @@ async function getIdOfChannel(channelName) {
     }
 }
 
-async function setUpBot() {
+async function initBot() {
     const token = process.env.SLACK_TOKEN;
     const alertChannelId = await getIdOfChannel(ALERT_CHANNEL_NAME);
     if (alertChannelId) {
@@ -42,13 +43,28 @@ async function setUpBot() {
         }
 
         if (message.channel === alertChannelId) {
-
+            // TODO
         } else {
             privateReplies.replyMessage(message, rtm);
         }
     });
 
+    startDiskMonitor(rtm, alertChannelId);
     rtm.start();
 }
 
-setUpBot();
+async function main() {
+    try {
+        await initBot();
+    } catch (error) {
+        console.error(error);
+        process.exit(1);
+    }
+
+    process.on('SIGINT', () => process.exit(0));
+    process.on('unhandledRejection', console.error);
+}
+
+if (require.main === module) { // Called directly
+    main();
+} // else required as a module
