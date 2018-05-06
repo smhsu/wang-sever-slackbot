@@ -12,11 +12,11 @@ const HELP_MESSAGE =
 `
 Here are a list of commands I understand:
 *help*: show this message
-*info load*: show a link to get current CPU and RAM use of our servers
+*info load*: show a link to get current CPU and RAM load of our servers
 *info disk*: get current disk usage of select file systems
 *about*: About me!
 `;
-const INFO_LOAD_MESSAGE = "Visit this link for CPU and RAM use: http://wangftp.wustl.edu/~silas/serverLoad.cgi";
+const INFO_LOAD_MESSAGE = "Visit this link for CPU and RAM load: http://wangftp.wustl.edu/~silas/serverLoad/";
 const ABOUT_MESSAGE = "I was created by Silas Hsu.  I like well-documented code, free space, and you, of course ❤️!  " +
     "See my source code at https://github.com/smhsu/wang-sever-slackbot";
 
