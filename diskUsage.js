@@ -9,8 +9,8 @@ const disk = require('diskusage');
 const bytes = require('bytes');
 const schedule = require('node-schedule');
 
-const MOUNT_POINTS_TO_CHECK = ["/bar", "/scratch"];
-const USE_WARNING_THRESHOLD = 80; // Percent
+const MOUNT_POINTS_TO_CHECK = ["/bar", "/scratch", "/tavern", "/saloon"];
+const USE_WARNING_THRESHOLD = 85; // Percent
 const DISK_CHECK_SCHEDULE = new schedule.RecurrenceRule();
 DISK_CHECK_SCHEDULE.dayOfWeek = new schedule.Range(1, 5); // Weekdays
 DISK_CHECK_SCHEDULE.hour = 12; // Noon
